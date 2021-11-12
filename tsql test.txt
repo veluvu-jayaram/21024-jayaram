@@ -1,0 +1,66 @@
+CREATE FUNCTION customers_orders ( @year varchar(20))
+RETURNS TABLE
+AS
+RETURN
+    SELECT  order_id, customer_id, store_id,staff_id,order_date,order_status
+    FROM sales.orders
+        
+    WHERE
+        order_date = @year;
+SELECT * from
+ customers_orders(2018);
+
+ ALTER FUNCTION customers_orders (@date1 varchar(20), @date2 varchar(20) )
+ 
+ RETURNS TABLE
+AS
+RETURN
+    SELECT  order_id, customer_id, store_id,staff_id,order_date,order_status
+	 FROM
+        sales.orders
+    WHERE
+        order_date BETWEEN @date1 AND @date2
+
+SELECT * from customers_orders(2016,2017)
+
+
+
+
+
+
+
+
+Create TABLE record (
+    customer_id int,
+	first_name varchar(50),
+    last_name varchar(50),
+ );
+
+CREATE TRIGGER deleted_records_trig
+ON sales.customers
+FOR DELETE
+AS
+BEGIN
+INSERT INTO record(customer_id, First_name, last_name)
+select customer_id, first_name, last_name from deleted
+select * from record
+END;
+
+DELETE from sales.customers 
+WHERE customer_id = 6;
+
+SELECT * FROM sales.customers;
+
+
+
+
+
+
+
+      
+       
+       
+		
+		
+		
+   
